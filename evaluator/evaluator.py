@@ -63,14 +63,16 @@ def calculateHitRate(recommendationsForAllUsersMap, leftOutPredictions):
             leftOutMovieID = int(leftOut[1])
         except ValueError:
             continue
-        for movieID in recommendationsForAllUsersMap[userID]:
-            if (leftOutMovieID == int(movieID)):
-                hits +=1
-                break
+
+        if userID in recommendationsForAllUsersMap:
+            for movieID in recommendationsForAllUsersMap[userID]:
+                if (leftOutMovieID == int(movieID)):
+                    hits +=1
+                    break
 
         total += 1
 
-    return hits/total
+    return 0.0 if total==0 else hits/total
 
 def calculateAverageReciprocalHitRate(recommendationsForAllUsersMap, leftOutPredictions):
     reciprocalSum = 0
@@ -93,7 +95,7 @@ def calculateAverageReciprocalHitRate(recommendationsForAllUsersMap, leftOutPred
 
         total += 1
     
-    return reciprocalSum / total
+    return 0.0 if total==0 else reciprocalSum / total
 
 def calculateCoverage(recommendationsForAllUsersMap):
     recommendedMovies = set()
@@ -120,6 +122,8 @@ def calculateAverageGiniSimpsonDiversityAcrossAllUsers(recommendationsForAllUser
     return total_diversity / users if users > 0 else 0
 
 def calculateGiniSimpsonDiversity(recommendationsList, movieGenreMap):
+    if not recommendationsList or not movieGenreMap:
+        return 0.0
     genre_counts = {}
     total_genres = 0
 
@@ -153,6 +157,8 @@ def calculateAverageNoveltyAcrossAllUsers(recommendationsForAllUsersMap):
     return totalNoveltyAcrossAllUsers / totalNumberOfUsers # calculate and return average novelty across all users
 
 def calculateAverageNoveltyForAListOfRecommendations(recommendationsList, totalNumberOfUsers, moviePopularityMap):
+    if not recommendationsList:
+        return 0.0
     totalNovelty = 0
     for movieId in recommendationsList:
         popularity = moviePopularityMap[movieId]

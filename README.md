@@ -25,7 +25,7 @@ Or on Windows via the installation page: https://www.python.org/downloads/
 
 ### 1. It is recommended to setup a python virtual environment where you install all the required dependencies:
 
-#### First create a venv in Python3.12:
+#### First create a venv in Python3.12 (ensure you are at the base directory):
 ```
 python3.12 -m venv your_venv_name
 ```
@@ -51,4 +51,12 @@ pip install -r requirements.txt
 
 ```
 python3.12 main.py
+```
+
+### 4. Run unit tests with the following:
+```
+python -m unittest tests.test_recommendations
+```
+```
+python -m unittest tests.test_evaluator
 ```

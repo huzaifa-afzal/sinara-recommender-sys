@@ -60,6 +60,8 @@ def build_user_item_matrix():
     return user_item_matrix
 
 def build_user_to_user_similarity_matrix(user_item_matrix):
+    if user_item_matrix is None or user_item_matrix.empty:
+        return None
     user_similarity = pds.DataFrame(cosine_similarity(user_item_matrix), index=user_item_matrix.index, columns=user_item_matrix.index)
     return user_similarity
 
